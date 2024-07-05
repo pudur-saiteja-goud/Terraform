@@ -1,0 +1,42 @@
+resource "aws_vpc" "qwer" {
+tags = {
+name = "dev"
+}
+enable_dns_hostnames = "true"
+instance_tenancy = "default"
+cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "poiu" {
+vpc_id = aws_vpc.qwer.id
+cidr_block = "10.0.1.0/24"
+availability_zone = "ap-south-2a"
+map_public_ip_on_launch = "true"
+tags = {
+name = "mysub"
+}
+}
+
+resource "aws_internet_gateway" "myigt" {
+vpc_id = aws_vpc.qwer.id
+tags = {
+name = "dev"
+}
+}
+
+
+resource "aws_route_table" "myryt" {
+vpc_id = aws_vpc.qwer.id
+route {
+cidr_block = "0.0.0.0/0"
+gateway_id = aws_internet_gateway.myigt.id
+}
+tags = {
+name = "dev"
+}
+}
+
+resource "aws_route_table_association" "myassocat" {
+subnet_id = aws_subnet.poiu.id
+route_table_id = aws_route_table.myryt.id
+}
