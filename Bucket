@@ -1,0 +1,18 @@
+resource "aws_s3_bucket" "bucket" {
+bucket = "pudur"
+}
+
+resource "aws_s3_bucket_versioning" "ccit" {
+bucket = "pudur"
+versioning_configuration {
+status = "Enabled"
+}
+}
+
+terraform {
+backend "s3" {
+bucket = "pudur"
+region = "us-east-1"
+key = "prod/terraform.tfstate"
+}
+}
