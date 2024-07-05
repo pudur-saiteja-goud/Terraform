@@ -1,0 +1,5 @@
+#### terraform import aws_s3_bucket.bucket pudur
+
+resource "aws_s3_bucket" "bucket" {
+bucket = "pudur"
+}
